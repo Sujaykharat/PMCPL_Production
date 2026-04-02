@@ -16,7 +16,7 @@ export function NewspaperScene({ scrollX }: SceneProps) {
       if (scrollX.current && imageRef.current && textRef.current) {
         const progress = Math.min(scrollX.current.currentX / window.innerWidth, 1);
         
-        // Ensure image doesn't scale to avoid cropping
+        // Ensure image doesn't scale to avoid cropping (teammate's change)
         imageRef.current.style.transform = 'none';
         
         // Parallax and fade for text
@@ -46,7 +46,18 @@ export function NewspaperScene({ scrollX }: SceneProps) {
         ref={textRef}
         className="relative z-20 h-full flex flex-col items-center justify-center text-center p-6 md:p-10"
       >
-
+        <div className="backdrop-blur-[2px] bg-white/5 border border-white/10 p-12 rounded-sm shadow-2xl">
+          <span className="text-xs tracking-[0.5em] uppercase mb-6 block text-[#2b2b2b]/60 font-medium">
+            Bombay Gazette • April 1995
+          </span>
+          <h1 className="text-5xl md:text-8xl font-serif text-[#2b2b2b] max-w-4xl leading-[0.9] tracking-tighter drop-shadow-sm">
+            THE OPPORTUNITY <br/> <span className="italic block mt-2 text-4xl md:text-7xl opacity-90">of a Generation</span>
+          </h1>
+          <div className="mt-10 h-[1px] w-24 bg-black/20 mx-auto" />
+          <p className="mt-8 font-serif text-lg md:text-xl italic text-[#2b2b2b]/70 tracking-wide">
+            Scroll to step back in time...
+          </p>
+        </div>
       </div>
     </section>
   );

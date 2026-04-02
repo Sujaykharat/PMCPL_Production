@@ -14,15 +14,23 @@ export function OfficeScene({ scrollX }: SceneProps) {
     let animationFrameId: number;
     const update = () => {
       if (scrollX.current && contentRef.current && bgRef.current) {
-        // progress relative to this scene's start (100vw)
-        const progress = Math.min(Math.max((scrollX.current.currentX - window.innerWidth * 0.5) / (window.innerWidth * 0.5), 0), 1);
         
-        // Reveal content (Opacity + parallax)
-        contentRef.current.style.opacity = progress.toString();
-        contentRef.current.style.transform = `translateX(${(1 - progress) * 100}px)`;
+        // Progress for background (image) fully tracks the 0.5 to 1.0 window
+        const bgProgress = Math.min(Math.max((scrollX.current.currentX - window.innerWidth * 0.5) / (window.innerWidth * 0.5), 0), 1);
+        
+        // Progress for text: Starts much later! From 0.7 to 1.0 window
+        // This ensures the image arrives first, and THEN the text smoothly animates in
+        const textProgress = Math.min(Math.max((scrollX.current.currentX - window.innerWidth * 0.7) / (window.innerWidth * 0.3), 0), 1);
+
+        // Smooth sine ease-in-out for text animation
+        const easedProgress = -(Math.cos(Math.PI * textProgress) - 1) / 2;
+        
+        // Reveal content based on delayed progress
+        contentRef.current.style.opacity = easedProgress.toString();
+        contentRef.current.style.transform = `translateY(${(1 - easedProgress) * 80}px)`;
         
         // Parallax for background image
-        bgRef.current.style.transform = `scale(${1.2 - progress * 0.2}) translateX(${(1-progress) * 50}px)`;
+        bgRef.current.style.transform = `scale(${1.2 - bgProgress * 0.2}) translateX(${(1 - bgProgress) * 50}px)`;
       }
       animationFrameId = requestAnimationFrame(update);
     };

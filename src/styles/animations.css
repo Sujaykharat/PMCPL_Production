@@ -1,0 +1,16 @@
+@keyframes subtle-float {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -2px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-subtle-float {
+  animation: subtle-float 6s ease-in-out infinite;
+}
+

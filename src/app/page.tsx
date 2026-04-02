@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { NewspaperScene } from "@/app/(sections)/scrollytelling/NewspaperScene";
 import { OfficeScene } from "@/app/(sections)/scrollytelling/OfficeScene";
 import { SuccessScene } from "@/app/(sections)/scrollytelling/SuccessScene";
+import { CrashScene } from "@/app/(sections)/scrollytelling/CrashScene";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,7 @@ export default function Home() {
       e.preventDefault(); // Lock native scroll
       scrollData.current.targetX += e.deltaY;
       
-      const maxScroll = window.innerWidth * 2.05; // 3 scenes - slightly more for buffer
+      const maxScroll = window.innerWidth * 3.05; // 4 scenes - slightly more for buffer
       scrollData.current.targetX = Math.max(0, Math.min(scrollData.current.targetX, maxScroll));
     };
 
@@ -64,10 +65,11 @@ export default function Home() {
       <div className="noise-overlay" />
       <div className="vignette" />
 
-      <div ref={containerRef} className="horizontal-container" style={{ width: "300vw" }}>
+      <div ref={containerRef} className="horizontal-container" style={{ width: "400vw" }}>
         <NewspaperScene scrollX={scrollData} />
         <OfficeScene scrollX={scrollData} />
         <SuccessScene scrollX={scrollData} />
+        <CrashScene scrollX={scrollData} />
       </div>
     </main>
   );

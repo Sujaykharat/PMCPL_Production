@@ -1,6 +1,6 @@
-import { redirect } from "next/navigation";
+import { StoryExperience } from "@/components/gallery/StoryExperience";
 
-/** Default entry: depth gallery first; horizontal story lives at `/home` */
+/** The premium cinematic storytelling root of the PMCPL platform */
 export default function RootPage() {
-  redirect("/depth-gallery");
+  return <StoryExperience />;
 }

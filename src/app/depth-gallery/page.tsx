@@ -9,8 +9,7 @@ import { GalleryOverlay } from "@/components/gallery/GalleryOverlay";
 import { Suspense } from "react";
 
 function GalleryContent() {
-  const searchParams = useSearchParams();
-  const isReverse = searchParams.get("mode") === "reverse";
+  // Removed isReverse logic to standardize flow
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -32,7 +31,6 @@ function GalleryContent() {
       </div>
 
       <DepthGalleryCanvas 
-        isReverse={isReverse}
         slides={SLIDES}
         finaleScrollRange={FINALE_SCROLL_RANGE}
         entranceRoute={ENTRANCE_ROUTE}

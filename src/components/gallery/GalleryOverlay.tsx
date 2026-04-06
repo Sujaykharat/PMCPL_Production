@@ -1,3 +1,5 @@
+import { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
 import { SLIDES } from "@/data/galleryData";
 
 interface GalleryOverlayProps {
@@ -7,8 +9,40 @@ interface GalleryOverlayProps {
 }
 
 export const GalleryOverlay = ({ activeIndex, progress, finaleProgress }: GalleryOverlayProps) => {
-  const activeSlide = SLIDES[activeIndex];
-  const heroOnLeft = activeIndex % 2 === 1;
+  const [internalIndex, setInternalIndex] = useState(activeIndex);
+  const articleRef = useRef<HTMLElement>(null);
+  const isInitialMount = useRef(true);
+  
+  const activeSlide = SLIDES[internalIndex];
+  const heroOnLeft = internalIndex % 2 === 1;
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    if (articleRef.current) {
+      gsap.to(articleRef.current, {
+        opacity: 0,
+        y: 8,
+        scale: 0.98,
+        duration: 0.3,
+        ease: "power2.inOut",
+        onComplete: () => {
+          setInternalIndex(activeIndex);
+          gsap.to(articleRef.current, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            delay: 0.05
+          });
+        }
+      });
+    }
+  }, [activeIndex]);
 
   return (
     <div
@@ -26,11 +60,14 @@ export const GalleryOverlay = ({ activeIndex, progress, finaleProgress }: Galler
             heroOnLeft ? "justify-start pl-0 sm:pl-4" : "justify-end pr-0 sm:pr-4"
           } transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]`}
         >
-          <article className="max-w-[min(38rem,calc(100vw-3rem))] rounded-[2.5rem] border border-white/[0.08] bg-[#1a1a1a]/75 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.7)] ring-1 ring-white/[0.04] backdrop-blur-2xl md:p-12">
+          <article 
+            ref={articleRef as any}
+            className="max-w-[min(38rem,calc(100vw-3rem))] rounded-[2.5rem] border border-white/[0.08] bg-[#1a1a1a]/75 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.7)] ring-1 ring-white/[0.04] backdrop-blur-2xl md:p-12"
+          >
             <div className="flex items-center gap-4 mb-5">
               <div className="h-[2px] w-10 bg-[#c5a059]/60" />
               <p className="text-[0.65rem] tracking-[0.3em] uppercase text-[#c5a059] font-bold">
-                CHAPTER 0{activeIndex + 1}
+                CHAPTER 0{internalIndex + 1}
               </p>
             </div>
             
@@ -54,7 +91,7 @@ export const GalleryOverlay = ({ activeIndex, progress, finaleProgress }: Galler
               />
             </div>
 
-            {activeIndex === SLIDES.length - 1 && (
+            {internalIndex === SLIDES.length - 1 && (
               <div className="mt-10 animate-pulse flex items-center gap-4">
                 <div className="w-3 h-3 rounded-full bg-[#c5a059] shadow-[0_0_12px_rgba(197,160,89,0.8)]" />
                 <p className="text-[0.7rem] tracking-[0.18em] uppercase text-[#c5a059] font-black">
@@ -67,7 +104,7 @@ export const GalleryOverlay = ({ activeIndex, progress, finaleProgress }: Galler
       </div>
 
       <div className="flex justify-between items-center text-[0.6rem] uppercase tracking-[0.3em] text-white/30 font-bold">
-        <span>{activeIndex === SLIDES.length - 1 ? "ENTER SITE" : "SWIPE TO EXPLORE"}</span>
+        <span>{internalIndex === SLIDES.length - 1 ? "ENTER SITE" : "SWIPE TO EXPLORE"}</span>
         <div className="flex gap-3">
           {SLIDES.map((_, i) => (
             <div key={i} className={`h-1.5 w-6 rounded-full transition-all duration-500 ${i === activeIndex ? "bg-[#c5a059] w-12" : "bg-white/10"}`} />

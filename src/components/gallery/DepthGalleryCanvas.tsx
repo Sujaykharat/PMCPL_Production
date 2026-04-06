@@ -3,7 +3,6 @@ import * as THREE from "three";
 import { DEPTH_GALLERY_RELOAD_KEY } from "@/lib/depthGalleryReload";
 
 interface DepthGalleryCanvasProps {
-  isReverse?: boolean;
   onActiveIndexChange: (index: number) => void;
   onProgressChange: (progress: number) => void;
   onFinaleProgressChange: (progress: number) => void;
@@ -13,7 +12,6 @@ interface DepthGalleryCanvasProps {
 }
 
 export const DepthGalleryCanvas = ({
-  isReverse = false,
   onActiveIndexChange,
   onProgressChange,
   onFinaleProgressChange,
@@ -65,19 +63,17 @@ export const DepthGalleryCanvas = ({
       scene.add(plane);
     });
 
-    let scrollTarget = isReverse ? maxScrollExtended : 0;
-    let scrollCurrent = isReverse ? maxScrollExtended : 0;
-    let previousScrollCurrent = isReverse ? maxScrollExtended : 0;
+    let scrollTarget = 0;
+    let scrollCurrent = 0;
+    let previousScrollCurrent = 0;
     let velocity = 0;
-    const scrollSmoothing = 0.08;
+    const scrollSmoothing = 0.045;
     const velocityDamping = 0.12;
     const velocityMax = 1.8;
 
-    if (isReverse) navigatedRef.current = true;
-
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      scrollTarget = THREE.MathUtils.clamp(scrollTarget + e.deltaY * 0.013, 0, maxScrollExtended);
+      scrollTarget = THREE.MathUtils.clamp(scrollTarget + e.deltaY * 0.0038, 0, maxScrollExtended);
     };
 
     window.addEventListener("wheel", onWheel, { passive: false });
@@ -89,6 +85,13 @@ export const DepthGalleryCanvas = ({
     };
 
     window.addEventListener("resize", onResize);
+
+    const mouse = new THREE.Vector2(0, 0);
+    const onMouseMove = (e: MouseEvent) => {
+      mouse.x = (e.clientX / window.innerWidth) - 0.5;
+      mouse.y = (e.clientY / window.innerHeight) - 0.5;
+    };
+    window.addEventListener("mousemove", onMouseMove);
 
     let animationFrameId: number;
     let time = 0;
@@ -130,7 +133,7 @@ export const DepthGalleryCanvas = ({
 
       planes.forEach((plane, index) => {
         const offset = Math.abs(focusStepFloat - index);
-        let focus = 1 - THREE.MathUtils.clamp(offset / 0.85, 0, 1);
+        let focus = 1 - THREE.MathUtils.clamp(offset / 1.15, 0, 1);
         focus = focus * focus * (3 - 2 * focus);
 
         let posX = (index % 2 === 0 ? -1.7 : 1.7);
@@ -139,16 +142,22 @@ export const DepthGalleryCanvas = ({
         let rotY = (index % 2 === 0 ? 6 : -6);
         let rotZ = (index % 2 === 0 ? -1.4 : 1.4);
 
+        // Individual unique animations
         if (index === 0) posX += (1 - focus) * (index % 2 === 0 ? -1.8 : 1.8);
         else if (index === 1) { posY += (1 - focus) * 1.5; rotX = (1 - focus) * 5; }
         else if (index === 2) { rotZ += Math.sin(time * 0.8) * 2 + (1-focus) * 15 * (index % 2 === 0 ? 1 : -1); posX += (1-focus) * 1.2 * (index % 2 === 0 ? -1 : 1); }
         else if (index === 3) { posX += (1 - focus) * 1.4 * (index % 2 === 0 ? -1 : 1); posY += (1 - focus) * 0.8; rotY += (1 - focus) * 12; }
 
         const breathing = index === activeIndexRef.current ? Math.sin(time) * 0.025 : 0;
-        plane.position.x = posX + velocity * 0.04 * (index % 2 === 0 ? 1 : -1);
-        plane.position.y = posY + velocity * 0.02 + breathing;
-        plane.rotation.x = THREE.MathUtils.degToRad(rotX);
-        plane.rotation.y = THREE.MathUtils.degToRad(rotY + (velocity * 8));
+        
+        // Mouse parallax
+        const parallaxX = mouse.x * 0.25;
+        const parallaxY = -mouse.y * 0.15;
+
+        plane.position.x = posX + velocity * 0.04 * (index % 2 === 0 ? 1 : -1) + parallaxX;
+        plane.position.y = posY + velocity * 0.02 + breathing + parallaxY;
+        plane.rotation.x = THREE.MathUtils.degToRad(rotX + mouse.y * 4);
+        plane.rotation.y = THREE.MathUtils.degToRad(rotY + (velocity * 8) - mouse.x * 6);
         plane.rotation.z = THREE.MathUtils.degToRad(rotZ + (velocity * 3.5));
 
         let scale = 0.68 + focus * 0.28 + velocityFactor * 0.03;
@@ -162,7 +171,7 @@ export const DepthGalleryCanvas = ({
         }
 
         plane.scale.setScalar(scale);
-        (plane.material as THREE.MeshBasicMaterial).opacity = 0.012 + focus * 0.988 + (index === lastIndex && finaleT > 0.15 ? finaleT * 0.45 : 0);
+        (plane.material as THREE.MeshBasicMaterial).opacity = 0.005 + (focus * 0.995) + (index === lastIndex && finaleT > 0.15 ? finaleT * 0.45 : 0);
       });
 
       const easeF = finaleT * finaleT * (3 - 2 * finaleT);
@@ -179,11 +188,12 @@ export const DepthGalleryCanvas = ({
     return () => {
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("mousemove", onMouseMove);
       cancelAnimationFrame(animationFrameId);
       planes.forEach(p => { (p.material as THREE.Material).dispose(); p.geometry.dispose(); });
       renderer.dispose();
     };
-  }, [slides, finaleScrollRange, entranceRoute, isReverse, onActiveIndexChange, onProgressChange, onFinaleProgressChange]);
+  }, [slides, finaleScrollRange, entranceRoute, onActiveIndexChange, onProgressChange, onFinaleProgressChange]);
 
   return <canvas ref={canvasRef} className="webgl" />;
 };

@@ -70,14 +70,10 @@ export const GalleryOverlay = ({ activeIndex, progress, finaleProgress }: Galler
             transform: `translateY(${(1 - contentOpacity) * 20}px)`
           }}
         >
-<<<<<<< HEAD
           <article 
             ref={articleRef as any}
-            className="max-w-[min(38rem,calc(100vw-3rem))] rounded-[2.5rem] border border-white/[0.08] bg-[#1a1a1a]/75 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.7)] ring-1 ring-white/[0.04] backdrop-blur-2xl md:p-12"
+            className="max-w-[min(38rem,calc(100vw-3rem))] rounded-[2.5rem] border border-white/[0.08] bg-[#1a1a1a]/85 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.8)] ring-1 ring-white/[0.04] backdrop-blur-3xl md:p-12"
           >
-=======
-          <article className="max-w-[min(38rem,calc(100vw-3rem))] rounded-[2.5rem] border border-white/[0.08] bg-[#1a1a1a]/85 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.8)] ring-1 ring-white/[0.04] backdrop-blur-3xl md:p-12">
->>>>>>> ef6d1f733a0a763eafa81bce33d6ec4774a0ce56
             <div className="flex items-center gap-4 mb-5">
               <div className="h-[2px] w-10 bg-[#c5a059]/60" />
               <p className="text-[0.65rem] tracking-[0.3em] uppercase text-[#c5a059] font-bold">

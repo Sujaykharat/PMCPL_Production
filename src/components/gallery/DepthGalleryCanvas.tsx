@@ -67,22 +67,11 @@ export const DepthGalleryCanvas = ({
     let scrollCurrent = 0;
     let previousScrollCurrent = 0;
     let velocity = 0;
-<<<<<<< HEAD
-    const scrollSmoothing = 0.045;
-    const velocityDamping = 0.12;
-    const velocityMax = 1.8;
-
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      scrollTarget = THREE.MathUtils.clamp(scrollTarget + e.deltaY * 0.0038, 0, maxScrollExtended);
-=======
     const scrollSmoothing = 0.065;
     const velocityDamping = 0.12;
     const velocityMax = 1.8;
 
-    if (isReverse) navigatedRef.current = true;
-
-    let targetIndex = isReverse ? slides.length : 0;
+    let targetIndex = 0;
     let lastWheelTime = 0;
     const wheelCooldown = 650; // ms between allowed jumps
 
@@ -113,7 +102,7 @@ export const DepthGalleryCanvas = ({
       }
       
       lastWheelTime = now;
->>>>>>> ef6d1f733a0a763eafa81bce33d6ec4774a0ce56
+    };
     };
 
     window.addEventListener("wheel", onWheel, { passive: false });

@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable} min-h-dvh bg-[#eadcc3] text-[#2b2b2b] antialiased overflow-hidden`}>
+      <body className={`${inter.variable} ${playfair.variable} min-h-screen bg-[var(--slate-light)] text-[var(--navy-deep)] antialiased`}>
         {children}
       </body>
     </html>

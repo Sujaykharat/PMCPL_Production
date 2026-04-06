@@ -37,7 +37,7 @@ export function NewspaperScene({ scrollX }: SceneProps) {
       <div
         ref={imageRef}
         className="absolute inset-0 z-0 bg-[length:100%_auto] bg-top bg-no-repeat grayscale-[0.2] sepia-[0.3]"
-        style={{ backgroundImage: `url('/newspaper.jpg.jpeg')` }}
+        style={{ backgroundImage: `url('/newspaper.jpg')` }}
       />
 
       {/* Gradient overlay for depth */}

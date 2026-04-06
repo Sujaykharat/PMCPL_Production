@@ -69,15 +69,43 @@ export const DepthGalleryCanvas = ({
     let scrollCurrent = isReverse ? maxScrollExtended : 0;
     let previousScrollCurrent = isReverse ? maxScrollExtended : 0;
     let velocity = 0;
-    const scrollSmoothing = 0.08;
+    const scrollSmoothing = 0.065;
     const velocityDamping = 0.12;
     const velocityMax = 1.8;
 
     if (isReverse) navigatedRef.current = true;
 
+    let targetIndex = isReverse ? slides.length : 0;
+    let lastWheelTime = 0;
+    const wheelCooldown = 650; // ms between allowed jumps
+
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      scrollTarget = THREE.MathUtils.clamp(scrollTarget + e.deltaY * 0.013, 0, maxScrollExtended);
+      const now = Date.now();
+      
+      // Cooldown to prevent multiple jumps from a single heavy scroll
+      if (now - lastWheelTime < wheelCooldown) return;
+      
+      // Minimum threshold to ignore minor mouse wheel movements
+      if (Math.abs(e.deltaY) < 12) return;
+
+      if (e.deltaY > 0) {
+        // Scroll Forward
+        targetIndex = Math.min(targetIndex + 1, slides.length);
+      } else {
+        // Scroll Backward
+        targetIndex = Math.max(targetIndex - 1, 0);
+      }
+      
+      // Update target position based on snap index
+      if (targetIndex < slides.length) {
+        scrollTarget = targetIndex * stepDistance;
+      } else {
+        // Last point is the finale
+        scrollTarget = maxScrollExtended;
+      }
+      
+      lastWheelTime = now;
     };
 
     window.addEventListener("wheel", onWheel, { passive: false });
@@ -130,14 +158,14 @@ export const DepthGalleryCanvas = ({
 
       planes.forEach((plane, index) => {
         const offset = Math.abs(focusStepFloat - index);
-        let focus = 1 - THREE.MathUtils.clamp(offset / 0.85, 0, 1);
+        let focus = 1 - THREE.MathUtils.clamp(offset / 1.15, 0, 1);
         focus = focus * focus * (3 - 2 * focus);
 
         let posX = (index % 2 === 0 ? -1.7 : 1.7);
         let posY = 0.05;
         let rotX = 0;
-        let rotY = (index % 2 === 0 ? 6 : -6);
-        let rotZ = (index % 2 === 0 ? -1.4 : 1.4);
+        let rotY = (index % 2 === 0 ? 6 : -6) * (1 - focus * 0.8);
+        let rotZ = (index % 2 === 0 ? -1.4 : 1.4) * (1 - focus * 0.8);
 
         if (index === 0) posX += (1 - focus) * (index % 2 === 0 ? -1.8 : 1.8);
         else if (index === 1) { posY += (1 - focus) * 1.5; rotX = (1 - focus) * 5; }

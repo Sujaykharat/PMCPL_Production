@@ -10,6 +10,12 @@ export const GalleryOverlay = ({ activeIndex, progress, finaleProgress }: Galler
   const activeSlide = SLIDES[activeIndex];
   const heroOnLeft = activeIndex % 2 === 1;
 
+  // Calculate opacity based on how centered the current slide is
+  const stepFloat = progress * (SLIDES.length - 1);
+  const distanceToActive = Math.abs(stepFloat - activeIndex);
+  const contentOpacity = Math.max(0, 1 - Math.min(1, distanceToActive * 2.8));
+
+
   return (
     <div
       className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-between p-5 sm:p-8 md:p-10 transition-opacity duration-500 ease-out"
@@ -25,8 +31,12 @@ export const GalleryOverlay = ({ activeIndex, progress, finaleProgress }: Galler
           className={`flex w-full ${
             heroOnLeft ? "justify-start pl-0 sm:pl-4" : "justify-end pr-0 sm:pr-4"
           } transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]`}
+          style={{ 
+            opacity: contentOpacity,
+            transform: `translateY(${(1 - contentOpacity) * 20}px)`
+          }}
         >
-          <article className="max-w-[min(38rem,calc(100vw-3rem))] rounded-[2.5rem] border border-white/[0.08] bg-[#1a1a1a]/75 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.7)] ring-1 ring-white/[0.04] backdrop-blur-2xl md:p-12">
+          <article className="max-w-[min(38rem,calc(100vw-3rem))] rounded-[2.5rem] border border-white/[0.08] bg-[#1a1a1a]/85 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.8)] ring-1 ring-white/[0.04] backdrop-blur-3xl md:p-12">
             <div className="flex items-center gap-4 mb-5">
               <div className="h-[2px] w-10 bg-[#c5a059]/60" />
               <p className="text-[0.65rem] tracking-[0.3em] uppercase text-[#c5a059] font-bold">

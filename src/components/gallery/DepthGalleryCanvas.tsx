@@ -103,7 +103,6 @@ export const DepthGalleryCanvas = ({
       
       lastWheelTime = now;
     };
-    };
 
     window.addEventListener("wheel", onWheel, { passive: false });
 

@@ -1,28 +1,38 @@
 export const SLIDES = [
   {
     image: "/newspaper.jpg",
-    title: "1995 - Hiring wave begins",
-    copy: "Classifieds and walk-in interviews marked the first big hiring push.",
+    title: "1995 - The Hiring Hook",
+    copy: "Newspaper classifieds and walk-in interviews. Candidates sit with printed resumes on notice boards.",
   },
   {
-    image: "/interview.jpg",
-    title: "Early career queues",
-    copy: "Candidates lined up with resumes, waiting for their turn and opportunity.",
+    image: "/scene_dotcom.jpg",
+    title: "2000 - Dot-com Boom",
+    copy: "First wave of IT hiring. CRT computers enter the office, and long queues form for interviews.",
   },
   {
-    image: "/crash.jpg",
-    title: "2001-2003 - Slowdown",
-    copy: "The crash reset priorities, but sharpened resilience for the next chapter.",
+    image: "/scene_crash.jpg",
+    title: "2008 - The Reality Check",
+    copy: "Hiring slows down. Budgets tighten, chairs empty out, and 'Hiring Freeze' papers become common.",
   },
   {
-    image: "/newspaper.jpg",
-    title: "Headlines keep turning",
-    copy: "Print and word of mouth kept the industry in motion between eras.",
+    image: "/scene_naukri.jpg",
+    title: "2010–2015 - Digital Shift",
+    copy: "Job portals change everything. Searching transitions completely to desktop screens and email.",
   },
   {
-    image: "/dotcom.jpg",
-    title: "1999 - Dot-com boom",
-    copy: "When IT became the dream job — demand surged and optimism hit its peak.",
+    image: "/scene_5.jpg",
+    title: "2016–2019 - India Shift",
+    copy: "Demonetization triggers the Gig Economy. Mobile apps, QR codes, and delivery jobs reshape the workforce.",
+  },
+  {
+    image: "/scene_remote.jpg",
+    title: "2020 - Remote Era",
+    copy: "Everything goes online. Zoom interviews replace physical meetings as everyone works from home.",
+  },
+  {
+    image: "/scene_future.jpg",
+    title: "2025–2026 - AI Era",
+    copy: "Smart, AI-driven hiring. Digital dashboards and chatbots evaluate candidates and analytics.",
   },
 ];
 

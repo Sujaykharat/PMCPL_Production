@@ -46,4 +46,8 @@ export interface CompanyData {
     tagline: string;
     copyright: string;
   };
+  outro: {
+    headline: string;
+    subheadline: string;
+  };
 }

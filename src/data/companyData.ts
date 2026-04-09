@@ -63,10 +63,6 @@ export const companyData: CompanyData = {
       icon: "Briefcase"
     }
   ],
-  outro: {
-    headline: "Your headline text here",
-    subheadline: "Your subheadline text here"
-  },
   footer: {
     address: "CBD-Belapur, Navi Mumbai, Maharashtra",
     phone: "+91 22 1234 5678",

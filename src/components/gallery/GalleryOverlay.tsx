@@ -71,7 +71,7 @@ export const GalleryOverlay = ({ activeIndex, progress, finaleProgress }: Galler
           }}
         >
           <article 
-            ref={articleRef as any}
+            ref={articleRef}
             className="max-w-[min(38rem,calc(100vw-3rem))] rounded-[2.5rem] border border-white/[0.08] bg-[#1a1a1a]/85 p-8 shadow-[0_40px_120px_rgba(0,0,0,0.8)] ring-1 ring-white/[0.04] backdrop-blur-3xl md:p-12"
           >
             <div className="flex items-center gap-4 mb-5">

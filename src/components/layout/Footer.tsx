@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { companyData } from "@/data/companyData";
+
 import { Container } from "@/components/ui/Container";
 
 export function Footer() {

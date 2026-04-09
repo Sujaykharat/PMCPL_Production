@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Observer } from "gsap/all";
-import { useRouter } from "next/navigation";
 import { SLIDES, FINALE_SCROLL_RANGE, ENTRANCE_ROUTE } from "@/data/galleryData";
 import { DepthGalleryCanvas } from "@/components/gallery/DepthGalleryCanvas";
 import { GalleryOverlay } from "@/components/gallery/GalleryOverlay";
@@ -13,7 +12,6 @@ if (typeof window !== "undefined") {
 }
 
 export const StoryExperience = () => {
-  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const [showGallery, setShowGallery] = useState(false);
@@ -21,7 +19,7 @@ export const StoryExperience = () => {
   const [progress, setProgress] = useState(0);
   const [finaleProgress, setFinaleProgress] = useState(0);
   const isAnimating = useRef(false);
-  const observerRef = useRef<any>(null);
+  const observerRef = useRef<Observer | null>(null);
 
   useEffect(() => {
     if (!containerRef.current || showGallery) return;

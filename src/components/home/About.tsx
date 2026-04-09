@@ -30,10 +30,10 @@ export const About = () => {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100 italic text-slate-600">
-                  "Thoughtful and responsible approach to talent acquisition."
+                  &quot;Thoughtful and responsible approach to talent acquisition.&quot;
                 </div>
                 <div className="p-6 rounded-2xl bg-[#c5a059]/5 border border-[#c5a059]/10 text-[#8b6d3b] font-medium">
-                  Headquartered in Navi Mumbai, serving India's top industries.
+                  Headquartered in Navi Mumbai, serving India&apos;s top industries.
                 </div>
               </div>
             </div>

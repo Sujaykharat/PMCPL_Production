@@ -154,10 +154,10 @@ export const CinematicLanding = () => {
         
         {/* Floating Elements Mid-Layer */}
         <div ref={floatingRef} className="absolute inset-0 pointer-events-none z-0">
-          <img src="/assets/floating_assets.png" className="floating-item absolute top-[15%] left-[25%] w-12 opacity-45 grayscale sepia" style={{ transform: 'rotate(15deg)' }} />
-          <img src="/assets/floating_assets.png" className="floating-item absolute bottom-[20%] left-[35%] w-16 opacity-30 blur-[2px]" />
-          <img src="/assets/floating_assets.png" className="floating-item absolute top-[40%] left-[10%] w-8 opacity-60" style={{ transform: 'rotate(-45deg)' }} />
-          <img src="/assets/floating_assets.png" className="floating-item absolute bottom-[35%] left-[20%] w-20 opacity-20 blur-[4px]" />
+          <img src="/assets/floating_assets.png" alt="floating paper asset" className="floating-item absolute top-[15%] left-[25%] w-12 opacity-45 grayscale sepia" style={{ transform: 'rotate(15deg)' }} />
+          <img src="/assets/floating_assets.png" alt="floating paper asset" className="floating-item absolute bottom-[20%] left-[35%] w-16 opacity-30 blur-[2px]" />
+          <img src="/assets/floating_assets.png" alt="floating paper asset" className="floating-item absolute top-[40%] left-[10%] w-8 opacity-60" style={{ transform: 'rotate(-45deg)' }} />
+          <img src="/assets/floating_assets.png" alt="floating paper asset" className="floating-item absolute bottom-[35%] left-[20%] w-20 opacity-20 blur-[4px]" />
         </div>
 
         {/* Newspaper Foreground */}

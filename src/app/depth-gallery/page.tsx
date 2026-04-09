@@ -1,8 +1,6 @@
-// @ts-nocheck
 "use client";
 
-import { useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { SLIDES, FINALE_SCROLL_RANGE, ENTRANCE_ROUTE } from "@/data/galleryData";
 import { DepthGalleryCanvas } from "@/components/gallery/DepthGalleryCanvas";
 import { GalleryOverlay } from "@/components/gallery/GalleryOverlay";

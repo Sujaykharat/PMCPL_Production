@@ -64,8 +64,12 @@ export const companyData: CompanyData = {
     }
   ],
   outro: {
-    headline: "Your headline text here",
-    subheadline: "Your subheadline text here"
+    headline: "Your headline",
+    subheadline: "Your subheadline",
+    cta: {
+      href: "/contact",
+      label: "Get Started"
+    }
   },
   footer: {
     address: "CBD-Belapur, Navi Mumbai, Maharashtra",

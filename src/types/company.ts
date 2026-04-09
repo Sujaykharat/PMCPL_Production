@@ -49,5 +49,9 @@ export interface CompanyData {
   outro: {
     headline: string;
     subheadline: string;
+    cta: {
+      href: string;
+      label: string;
+    };
   };
 }
